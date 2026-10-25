@@ -1883,19 +1883,30 @@ function initModel(){
     [[S.stairs[1],S.stairs[2]],[S.stairs[2],S.stairs[3]]].forEach(([A,B])=>{rod([A[0],yL+3.4,A[1]],[B[0],yL+3.4,B[1]],.07,stM,stg,6);[A,B].forEach(P=>bx2(P,yL,yL+3.4,.18,stM,stg))});
     flight(s2,e2,len(sub(f2[1],f2[0])),n2,yL,sub(f2[1],f2[0])); }
 
-  /* ----- boat lift (pontoon / 21' Sea-Doo Switch) ----- */
-  const lM=mat("boatlift","lift"), blg=G("boatlift");
-  [3.1,7.4].forEach(u=>{const a=at(S.slipP3,AX_SLIP,AC_SLIP,u,3),b=at(S.slipP3,AX_SLIP,AC_SLIP,u,21);beam(a,b,.35,.75,.5,lM,blg)});
-  [6,18].forEach(v=>{const a=at(S.slipP3,AX_SLIP,AC_SLIP,.6,v),b=at(S.slipP3,AX_SLIP,AC_SLIP,9.9,v);beam(a,b,.75,1.15,.55,lM,blg);
-    [.6,9.9].forEach(u=>{const p=at(S.slipP3,AX_SLIP,AC_SLIP,u,v);rod([p[0],1,p[1]],[p[0],UPPER-1.5,p[1]],.04,mat("boatlift","cable"),blg,4)})});
+  /* ----- boat lift (pontoon / 21' Sea-Doo Switch): two cross beams, carpeted V-bunks set to the hull's deadrise ----- */
+  const lM=mat("boatlift","lift"), blg=G("boatlift"), bunkM=mat("boatlift","bumper");
+  [5,19].forEach(v=>{const a=at(S.slipP3,AX_SLIP,AC_SLIP,.6,v),b=at(S.slipP3,AX_SLIP,AC_SLIP,9.9,v);beam(a,b,.15,.6,.55,lM,blg);
+    [.6,9.9].forEach(u=>{const p=at(S.slipP3,AX_SLIP,AC_SLIP,u,v);bx2(p,.15,1.1,.35,lM,blg);rod([p[0],1.1,p[1]],[p[0],UPPER-1.5,p[1]],.04,mat("boatlift","cable"),blg,4)})});
+  [[3.25,1],[7.25,-1]].forEach(([u,s])=>{const a=at(S.slipP3,AX_SLIP,AC_SLIP,u,3),b=at(S.slipP3,AX_SLIP,AC_SLIP,u,21);
+    bx2(at(S.slipP3,AX_SLIP,AC_SLIP,u,5),.6,.85,.3,lM,blg);bx2(at(S.slipP3,AX_SLIP,AC_SLIP,u,19),.6,.85,.3,lM,blg);
+    const m=beam(a,b,.85,1.2,.65,bunkM,blg);m.rotateX(s*.36)});
   { const p=at(S.slipP3,AX_SLIP,AC_SLIP,5.25,12);bx2(p,UPPER-2.4,UPPER-1.5,1.3,lM,blg); }
 
-  /* ----- tandem jet ski cradle with back lift (Sheet A.4) ----- */
-  const jM=mat("jetski","lift"), jg=G("jetski");
-  [1.95,4.05].forEach(u=>{beam(at(S.jetO,AX_JET,AC_JET,u,0),at(S.jetO,AX_JET,AC_JET,u,18),.55,1.05,.3,jM,jg);
-    beam(at(S.jetO,AX_JET,AC_JET,u,9),at(S.jetO,AX_JET,AC_JET,u,18),1.7,2.2,.3,jM,jg)});
-  [3,15].forEach(v=>{beam(at(S.jetO,AX_JET,AC_JET,.7,v),at(S.jetO,AX_JET,AC_JET,5.3,v),.3,.6,.7,jM,jg);
-    [.7,5.3].forEach(u=>{const p=at(S.jetO,AX_JET,AC_JET,u,v);rod([p[0],.6,p[1]],[p[0],UPPER-1.5,p[1]],.04,mat("jetski","cable"),jg,4)})});
+  /* ----- tandem jet ski cradle with back lift, per Sheet A.4 -----
+     lower bunks: 2 × HSS 6"×2"×1/4", 18'-0" long, 2'-1" out to out
+     upper (back-lift) bunks: 2 × HSS 6"×2"×1/4", 9'-0" long, on plate risers (typ. 4)
+     lift beams: 2, 4'-5" long, plate gussets to the bunks, plate lift lugs and wire cables at the ends (typ. 4) */
+  const jM=mat("jetski","lift"), jg=G("jetski"), jcM=mat("jetski","cable");
+  const JU=3, HB=2.083/2-.083, BT=1.0, UB=BT+1.25;           // bunk centre offset, lower bunk top, upper bunk top (ft)
+  const JP=(u,v)=>at(S.jetO,AX_JET,AC_JET,u,v);
+  [-HB,HB].forEach(o=>{
+    beam(JP(JU+o,0),JP(JU+o,18),BT-.5,BT,.167,jM,jg);                         // lower bunk, 18'-0"
+    beam(JP(JU+o,9),JP(JU+o,18),UB-.5,UB,.167,jM,jg);                         // upper bunk, 9'-0"
+    [9.6,17.4].forEach(v=>beam(JP(JU+o,v-.25),JP(JU+o,v+.25),BT,UB-.5,.05,jM,jg))});   // plate risers
+  [1.6,12.4].forEach(v=>{const a=JP(JU-2.21,v),b=JP(JU+2.21,v);beam(a,b,BT-1.05,BT-.5,.42,jM,jg);   // lift beam, 4'-5"
+    [-HB,HB].forEach(o=>{const g=JP(JU+o+(o<0?.22:-.22),v);bx2(g,BT-.5,BT-.15,.12,jM,jg)});          // plate gussets
+    [-2.12,2.12].forEach(o=>{const p=JP(JU+o,v);beam(add(p,mul(AX_JET,-.2)),add(p,mul(AX_JET,.2)),BT-1.05,BT+.05,.05,jM,jg);  // plate lift lug
+      rod([p[0],BT+.05,p[1]],[p[0],UPPER-1.5,p[1]],.035,jcM,jg,4)})});
 
   /* ----- electrical: panel near the shore point ----- */
   const eM=mat("electrical","box"), eg=G("electrical");
@@ -1911,23 +1922,99 @@ function initModel(){
   const canopy=new THREE.IcosahedronGeometry(1,0);
   for(let n=0;n<150;n++){const x=-110+rnd()*330,z=-60+rnd()*220;const sd=sideDist(x,z);
     if(sd<20)continue; if(Math.hypot(x-C0[0],z-C0[1])<34)continue;
+    { const A=[C0[0]+48,C0[1]+46],Bv=[C0[0]-4,C0[1]-4],d=sub(Bv,A),t=Math.max(0,Math.min(1,((x-A[0])*d[0]+(z-A[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));
+      if(Math.hypot(x-A[0]-d[0]*t,z-A[1]-d[1]*t)<12)continue; }   // keep the yard view clear
     const h=groundH(x,z),s=.8+rnd()*.8,th=4+rnd()*3;
     const t=new THREE.Mesh(new THREE.CylinderGeometry(.35*s,.5*s,th*s,6),trunkM);t.position.set(x,h+th*s/2,z);t.castShadow=true;trees.add(t);
     const c=new THREE.Mesh(canopy,leafMs[n%4]);c.scale.set(5*s,4.4*s,5*s);c.position.set(x,h+th*s+3*s,z);c.rotation.y=rnd()*3;c.castShadow=true;trees.add(c)}
 
-  /* ----- boats for scale: pontoon in the slip, two jet skis on the cradle ----- */
+  /* ----- boats for scale: a 21' V-hull bowrider on the boat lift, two jet skis on the tandem cradle ----- */
   const boats=new THREE.Group(); scene.add(boats);
-  function hull(w,l,h,col){const s=new THREE.Shape();const hw=w/2,hl=l/2;s.moveTo(-hw,hl);s.lineTo(hw,hl);s.lineTo(hw,-hl*.45);s.quadraticCurveTo(hw*.95,-hl*.85,0,-hl);s.quadraticCurveTo(-hw*.95,-hl*.85,-hw,-hl*.45);s.closePath();
-    const g=new THREE.ExtrudeGeometry(s,{depth:h,bevelEnabled:false});g.rotateX(-Math.PI/2);return new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:col,roughness:.35,metalness:.05}))}
-  { const g=new THREE.Group(); const tubeM=new THREE.MeshStandardMaterial({color:0xd9dde0,roughness:.3,metalness:.7});
-    [-2.6,2.6].forEach(x=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(1,1,19,16),tubeM);t.rotation.x=Math.PI/2;t.position.set(x,1.3,0);g.add(t)});
-    const dk=new THREE.Mesh(geoBox,new THREE.MeshStandardMaterial({color:0x8e8a80,roughness:.9}));dk.scale.set(8,.3,20);dk.position.y=2.5;g.add(dk);
-    const fence=new THREE.Mesh(geoBox,new THREE.MeshStandardMaterial({color:0xf2f2ef,roughness:.6}));fence.scale.set(8,2.2,16);fence.position.set(0,3.7,1);g.add(fence);
-    const cons=new THREE.Mesh(geoBox,new THREE.MeshStandardMaterial({color:0x1f4c66,roughness:.5}));cons.scale.set(2,1.4,1.5);cons.position.set(1.8,4.6,-4);g.add(cons);
-    const p=at(S.slipP3,AX_SLIP,AC_SLIP,5.25,12); g.position.set(p[0],.6,p[1]); g.rotation.y=Math.atan2(AX_SLIP[0],AX_SLIP[1]); g.traverse(o=>o.castShadow=true); boats.add(g); }
-  function ski(p,y,col){const g=new THREE.Group();const hb=hull(3.4,10,1.6,col);hb.castShadow=true;g.add(hb);const s=new THREE.Mesh(geoBox,new THREE.MeshStandardMaterial({color:0x1e2326}));s.scale.set(1.3,.7,3.4);s.position.set(0,1.9,.6);g.add(s);
-    g.position.set(p[0],y,p[1]);g.rotation.y=Math.atan2(AX_JET[0],AX_JET[1])+Math.PI;boats.add(g)}
-  ski(at(S.jetO,AX_JET,AC_JET,3,4.6),1.1,0xffffff); ski(at(S.jetO,AX_JET,AC_JET,3,13.6),2.25,0xe9b23c);
+  /* loft a hull through cross-sections; each station is {z, pts:[[x,y]…]} = half profile starting at the keel (x = 0) */
+  function loft(stations,closed,colorAt){
+    const P=[],C=[],I=[];let m=0;const col=new THREE.Color();
+    stations.forEach((s,k)=>{const h=s.pts;const ring=closed?[...h,...h.slice(1,-1).reverse().map(([x,y])=>[-x,y])]:[...h.slice(1).reverse().map(([x,y])=>[-x,y]),...h];
+      m=ring.length;ring.forEach(([x,y])=>{P.push(x,y,s.z);col.set(colorAt(x,y,s,k));col.convertSRGBToLinear();C.push(col.r,col.g,col.b)})});
+    const seg=closed?m:m-1;
+    for(let k=0;k<stations.length-1;k++)for(let j=0;j<seg;j++){const a=k*m+j,b=k*m+(j+1)%m,c=(k+1)*m+j,d=(k+1)*m+(j+1)%m;I.push(a,c,b,b,c,d)}
+    [0,stations.length-1].forEach(k=>{const base=P.length/3;let cx=0,cy=0;for(let j=0;j<m;j++){cx+=P[(k*m+j)*3];cy+=P[(k*m+j)*3+1]}
+      P.push(cx/m,cy/m,stations[k].z);const cc=C.slice((k*m)*3,(k*m)*3+3);C.push(...cc);
+      for(let j=0;j<seg;j++)I.push(base,k*m+j,k*m+(j+1)%m)});
+    const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.Float32BufferAttribute(P,3));g.setAttribute("color",new THREE.Float32BufferAttribute(C,3));
+    g.setIndex(I);g.computeVertexNormals();return g}
+  const gloss=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.28,metalness:.05,side:THREE.DoubleSide});
+  const M=(c,r=.5,mt=0)=>new THREE.MeshStandardMaterial({color:new THREE.Color(c).convertSRGBToLinear(),roughness:r,metalness:mt,side:THREE.DoubleSide});
+  const sphere=new THREE.SphereGeometry(1,20,14), cyl=new THREE.CylinderGeometry(1,1,1,16);
+  function part(geo,m,p,s,par,rx=0){const o=new THREE.Mesh(geo,m);o.position.set(...p);o.scale.set(...s);o.rotation.x=rx;o.castShadow=true;par.add(o);return o}
+  /* flat panel following an outline in plan (x, z), with its height set per point by fy(z) */
+  function deckPanel(outline,holes,th,fy,m,par){const sh=new THREE.Shape();outline.forEach(([x,z],i)=>i?sh.lineTo(x,z):sh.moveTo(x,z));
+    (holes||[]).forEach(hp=>{const h=new THREE.Path();hp.forEach(([x,z],i)=>i?h.lineTo(x,z):h.moveTo(x,z));sh.holes.push(h)});
+    const g=new THREE.ExtrudeGeometry(sh,{depth:th,bevelEnabled:false,curveSegments:4});g.rotateX(Math.PI/2);
+    const pa=g.attributes.position;for(let i=0;i<pa.count;i++)pa.setY(i,pa.getY(i)+fy(pa.getZ(i)));g.computeVertexNormals();
+    const o=new THREE.Mesh(g,m);o.castShadow=true;o.receiveShadow=true;par.add(o);return o}
+
+  /* 21' bowrider: 8'-4" beam, 19°–40° deadrise, sharp chines, navy sheer stripe, outboard */
+  { const g=new THREE.Group(), L=21, B=4.15, N=34;
+    const T=z=>z/L+.5;
+    const bw=t=>t<.6?B*(.93+.07*t/.6):B*Math.sqrt(Math.max(.002,1-((t-.6)/.4)**2));
+    const kd=t=>t<.62?0:((t-.62)/.38)**1.6*2.0;
+    const dr=t=>.33+Math.max(0,t-.35)*.75;
+    const sh=t=>3.15+1.15*t*t;
+    const st=[];
+    for(let k=0;k<=N;k++){const t=k/N,z=(t-.5)*L,b=bw(t),y0=kd(t),s=sh(t),cx=.84*b,cy=Math.min(s-.9,y0+cx*Math.tan(dr(t)));
+      const pts=[[0,y0],[cx*.35,y0+cx*.35*Math.tan(dr(t))*.92],[cx*.7,y0+cx*.7*Math.tan(dr(t))*.97],[cx,cy],[b*.93,cy+.05],[b*.965,cy+(s-cy)*.4],
+        [b*.985,s-.95],[b*.99,s-.88],[b*.995,s-.36],[b,s-.3],[b,s]];
+      st.push({z,pts,t,s})}
+    g.add(new THREE.Mesh(loft(st,false,(x,y,s)=>y>s.s-.92&&y<s.s-.33?"#173a5e":"#f4f4f1"),gloss));
+    /* gunwale cap and bow deck, cockpit floor */
+    const outer=[],inner=[];for(let k=0;k<=N;k++){const t=k/N,z=(t-.5)*L;outer.push([bw(t),z]);if(t>.03&&t<.9)inner.push([bw(t)-(t>.8?.9:.55),z])}
+    const ol=[...outer,...outer.slice().reverse().map(([x,z])=>[-x,z])], il=[...inner,...inner.slice().reverse().map(([x,z])=>[-x,z])];
+    deckPanel(ol,[il],.18,z=>sh(T(z))+.01,M("#efefea",.4),g);
+    const fl=t=>1.45+Math.max(0,t-.62)*3.6;
+    const half=t=>{const y=fl(t),c=.84*bw(t),cyy=kd(t)+c*Math.tan(dr(t));return y<cyy?Math.max(.2,(y-kd(t))/Math.tan(dr(t))-.15):bw(t)*.86};
+    const fo=[];for(let k=1;k<N*.9;k++){const t=k/N;fo.push([half(t),(t-.5)*L])}
+    deckPanel([...fo,...fo.slice().reverse().map(([x,z])=>[-x,z])],null,.15,z=>fl(T(z)),M("#d9d4c7",.85),g);
+    /* seats, console, windshield */
+    const cush=M("#e9e4d8",.7), trim=M("#173a5e",.6), dark=M("#22272b",.5), glass=new THREE.MeshStandardMaterial({color:0x5a7684,roughness:.05,metalness:.2,transparent:true,opacity:.45,side:THREE.DoubleSide});
+    part(geoBox,cush,[0,2.25,-L/2+1.4],[7,1.6,2.0],g); part(geoBox,cush,[0,3.3,-L/2+.75],[7,1.4,.6],g);             // rear bench
+    [[1.9],[-1.9]].forEach(([x])=>{part(geoBox,cush,[x,2.45,-.6],[1.7,.55,1.7],g);part(geoBox,cush,[x,3.35,-1.35],[1.7,1.5,.35],g);part(cyl,dark,[x,1.85,-.6],[.18,.8,.18],g)});
+    part(geoBox,M("#f4f4f1",.35),[1.9,2.25,1.7],[2.2,2.6,2.2],g); part(geoBox,dark,[1.9,3.62,1.95],[1.9,.2,1.5],g,-.35);    // helm console
+    part(cyl,dark,[1.6,3.9,1.3],[.55,.08,.55],g,1.2);                                                                     // wheel
+    part(geoBox,M("#f4f4f1",.35),[-1.9,2.25,1.7],[2.2,2.6,2.2],g);                                                       // passenger console
+    { const w=new THREE.Mesh(new THREE.CylinderGeometry(3.95,3.95,1.5,40,1,true,-1.25,2.5),glass);w.position.set(0,4.25,-.9);g.add(w);
+      const fr=new THREE.Mesh(new THREE.TorusGeometry(3.95,.05,6,40,2.5),M("#c9cfd2",.25,.8));fr.rotation.set(Math.PI/2,0,-1.25+Math.PI/2);fr.position.set(0,5.0,-.9);g.add(fr) }
+    [-1,1].forEach(sd=>{const pts=[];for(let k=0;k<=10;k++){const t=.75+k*.025;pts.push([sd*(bw(t)-.25),sh(t)+.05,(t-.5)*L])}       // bow seats + bow rail
+      for(let k=0;k<10;k+=1){const [x,y,z]=pts[k],[x2,y2,z2]=pts[k+1];if(k<8)part(geoBox,cush,[(x+x2)/2*.82,y-1.05,(z+z2)/2],[1.3,.5,1.2],g)}
+      for(let k=0;k<10;k++){const a=pts[k],b2=pts[k+1];rod([a[0],a[1]+1.1,a[2]],[b2[0],b2[1]+1.1,b2[2]],.035,M("#c9cfd2",.2,.85),g,6)}
+      for(let k=0;k<=10;k+=5){const a=pts[k];rod([a[0],a[1],a[2]],[a[0],a[1]+1.1,a[2]],.03,M("#c9cfd2",.2,.85),g,6)}});
+    /* outboard */
+    const ob=new THREE.Group();ob.position.set(0,sh(0),-L/2-.45);g.add(ob);
+    part(geoBox,M("#2a2e31",.35),[0,.35,-.6],[1.15,1.3,1.75],ob); part(sphere,M("#2a2e31",.35),[0,1.0,-.6],[.58,.32,.88],ob); part(geoBox,M("#c9cfd2",.3,.6),[0,.05,-.6],[1.18,.12,1.78],ob); part(geoBox,M("#2a2e31",.5),[0,-.55,-.3],[.7,.7,.9],ob);
+    part(geoBox,M("#2a2e31",.5),[0,-1.9,-.25],[.35,2.4,.55],ob); part(cyl,M("#2a2e31",.5),[0,-3.0,-.15],[.22,1.2,.22],ob,Math.PI/2);
+    part(geoBox,M("#9aa3a8",.3,.7),[0,-3.0,-.85],[.05,.7,.12],ob);
+    const p=at(S.slipP3,AX_SLIP,AC_SLIP,5.25,12.5);g.position.set(p[0],.33,p[1]);g.rotation.y=Math.atan2(-AX_SLIP[0],-AX_SLIP[1]);
+    g.traverse(o=>{if(o.isMesh)o.castShadow=true});boats.add(g) }
+
+  /* jet ski: ~10.5' long, 4' beam, V-hull with raised hood, saddle seat and handlebars */
+  function ski(p,y,accent){const g=new THREE.Group(),L=10.5,W=1.98,N=26;
+    const wd=t=>t<.55?W*(.86+.14*t/.55):W*Math.sqrt(Math.max(.004,1-((t-.55)/.45)**2));
+    const kd=t=>t<.6?0:((t-.6)/.4)**1.5*1.05, dr=t=>.36+(t>.45?(t-.45)*.7:0), gy=t=>1.25+.35*t;
+    const hood=t=>1.15*Math.exp(-(((t-.74)/.13)**2)), top=t=>gy(t)+.32+hood(t)-(t>.93?(t-.93)*4:0);
+    const st=[];
+    for(let k=0;k<=N;k++){const t=k/N,w=wd(t),y0=kd(t),cx=.78*w,cy=Math.min(gy(t)-.3,y0+cx*Math.tan(dr(t)));
+      st.push({z:(t-.5)*L,t,g:gy(t),pts:[[0,y0],[cx*.5,y0+cx*.5*Math.tan(dr(t))],[cx,cy],[w*.92,cy+.06],[w,gy(t)-.05],[w*.97,gy(t)+.05],[w*.82,gy(t)+.12],[w*.62,top(t)-.12],[w*.3,top(t)-.02],[0,top(t)]]})}
+    g.add(new THREE.Mesh(loft(st,true,(x,yy,s)=>yy<s.g-.02?"#f2f2ee":yy<s.g+.09?"#2b3033":accent),gloss));
+    part(sphere,M("#151819",.6),[0,gy(.4)+.45,(.4-.5)*L],[.78,.42,2.35],g);                       // seat
+    part(sphere,M("#151819",.6),[0,gy(.62)+.92,(.62-.5)*L],[.75,.3,.55],g);                        // steering cowl
+    rod([-1.15,gy(.6)+1.45,(.6-.5)*L],[1.15,gy(.6)+1.45,(.6-.5)*L],.06,M("#2b3033",.4,.4),g,8);    // handlebars
+    [-1.15,1.15].forEach(x=>part(cyl,M("#151819",.7),[x,gy(.6)+1.45,(.6-.5)*L],[.09,.38,.09],g).rotation.z=Math.PI/2);
+    rod([0,gy(.62)+.9,(.62-.5)*L],[0,gy(.6)+1.45,(.6-.5)*L],.08,M("#2b3033",.4,.4),g,8);
+    part(cyl,M("#2b3033",.4,.5),[0,.55,-L/2-.12],[.32,.5,.32],g,Math.PI/2);                        // jet nozzle
+    part(geoBox,M("#2b3033",.5),[0,gy(0)+.3,-L/2+.2],[2.6,.08,.6],g);                              // stern platform
+    g.position.set(p[0],y,p[1]);g.rotation.y=Math.atan2(-AX_JET[0],-AX_JET[1]);g.traverse(o=>{if(o.isMesh)o.castShadow=true});boats.add(g)}
+  /* the hull rests on the bunks where its bottom is HB off centre */
+  const sit=HB*Math.tan(.36);
+  ski(JP(JU,5.1),BT-sit,"#e8b52a"); ski(JP(JU,13.4),UB-sit,"#1f6f8b");
 
   /* ----- dimension labels ----- */
   const dims=new THREE.Group(); dims.visible=false; scene.add(dims);
