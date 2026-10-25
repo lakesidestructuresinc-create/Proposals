@@ -1897,13 +1897,13 @@ function initModel(){
      upper (back-lift) bunks: 2 × HSS 6"×2"×1/4", 9'-0" long, on plate risers (typ. 4)
      lift beams: 2, 4'-5" long, plate gussets to the bunks, plate lift lugs and wire cables at the ends (typ. 4) */
   const jM=mat("jetski","lift"), jg=G("jetski"), jcM=mat("jetski","cable");
-  const JU=3, HB=2.083/2-.083, BT=1.0, UB=BT+1.25;           // bunk centre offset, lower bunk top, upper bunk top (ft)
+  const JU=3, HB=2.083/2-.083, BT=1.0, UB=BT+1.6;           // bunk centre offset, lower bunk top, upper bunk top (ft)
   const JP=(u,v)=>at(S.jetO,AX_JET,AC_JET,u,v);
   [-HB,HB].forEach(o=>{
     beam(JP(JU+o,0),JP(JU+o,18),BT-.5,BT,.167,jM,jg);                         // lower bunk, 18'-0"
-    beam(JP(JU+o,9),JP(JU+o,18),UB-.5,UB,.167,jM,jg);                         // upper bunk, 9'-0"
-    [9.6,17.4].forEach(v=>beam(JP(JU+o,v-.25),JP(JU+o,v+.25),BT,UB-.5,.05,jM,jg))});   // plate risers
-  [1.6,12.4].forEach(v=>{const a=JP(JU-2.21,v),b=JP(JU+2.21,v);beam(a,b,BT-1.05,BT-.5,.42,jM,jg);   // lift beam, 4'-5"
+    beam(JP(JU+o,0),JP(JU+o,9),UB-.5,UB,.167,jM,jg);                          // upper bunk, 9'-0", land end (raised ski)
+    [.6,8.4].forEach(v=>beam(JP(JU+o,v-.25),JP(JU+o,v+.25),BT,UB-.5,.05,jM,jg))});   // plate risers
+  [5.6,16.4].forEach(v=>{const a=JP(JU-2.21,v),b=JP(JU+2.21,v);beam(a,b,BT-1.05,BT-.5,.42,jM,jg);   // lift beam, 4'-5"
     [-HB,HB].forEach(o=>{const g=JP(JU+o+(o<0?.22:-.22),v);bx2(g,BT-.5,BT-.15,.12,jM,jg)});          // plate gussets
     [-2.12,2.12].forEach(o=>{const p=JP(JU+o,v);beam(add(p,mul(AX_JET,-.2)),add(p,mul(AX_JET,.2)),BT-1.05,BT+.05,.05,jM,jg);  // plate lift lug
       rod([p[0],BT+.05,p[1]],[p[0],UPPER-1.5,p[1]],.035,jcM,jg,4)})});
@@ -1996,10 +1996,10 @@ function initModel(){
     g.traverse(o=>{if(o.isMesh)o.castShadow=true});boats.add(g) }
 
   /* jet ski: ~10.5' long, 4' beam, V-hull with raised hood, saddle seat and handlebars */
-  function ski(p,y,accent){const g=new THREE.Group(),L=10.5,W=1.98,N=26;
+  function ski(p,y,accent){const g=new THREE.Group(),L=10.2,W=1.98,N=26;
     const wd=t=>t<.55?W*(.86+.14*t/.55):W*Math.sqrt(Math.max(.004,1-((t-.55)/.45)**2));
     const kd=t=>t<.6?0:((t-.6)/.4)**1.5*1.05, dr=t=>.36+(t>.45?(t-.45)*.7:0), gy=t=>1.25+.35*t;
-    const hood=t=>1.15*Math.exp(-(((t-.74)/.13)**2)), top=t=>gy(t)+.32+hood(t)-(t>.93?(t-.93)*4:0);
+    const hood=t=>1.15*Math.exp(-(((t-.70)/.12)**2)), top=t=>Math.max(kd(t)+.45,gy(t)+.32+hood(t)-(t>.9?(t-.9)*9:0));
     const st=[];
     for(let k=0;k<=N;k++){const t=k/N,w=wd(t),y0=kd(t),cx=.78*w,cy=Math.min(gy(t)-.3,y0+cx*Math.tan(dr(t)));
       st.push({z:(t-.5)*L,t,g:gy(t),pts:[[0,y0],[cx*.5,y0+cx*.5*Math.tan(dr(t))],[cx,cy],[w*.92,cy+.06],[w,gy(t)-.05],[w*.97,gy(t)+.05],[w*.82,gy(t)+.12],[w*.62,top(t)-.12],[w*.3,top(t)-.02],[0,top(t)]]})}
@@ -2014,7 +2014,7 @@ function initModel(){
     g.position.set(p[0],y,p[1]);g.rotation.y=Math.atan2(-AX_JET[0],-AX_JET[1]);g.traverse(o=>{if(o.isMesh)o.castShadow=true});boats.add(g)}
   /* the hull rests on the bunks where its bottom is HB off centre */
   const sit=HB*Math.tan(.36);
-  ski(JP(JU,5.1),BT-sit,"#e8b52a"); ski(JP(JU,13.4),UB-sit,"#1f6f8b");
+  ski(JP(JU,4.25),UB-sit,"#1f6f8b"); ski(JP(JU,13.85),BT-sit,"#e8b52a");   // land-side ski rides higher
 
   /* ----- dimension labels ----- */
   const dims=new THREE.Group(); dims.visible=false; scene.add(dims);
