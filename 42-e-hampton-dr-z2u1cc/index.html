@@ -1860,7 +1860,10 @@ function initModel(){
   clocWall(GEO.failed,"cloc60",true);
   clocWall(GEO.newWall,"cloc90",true);
   const ex=new THREE.Group(); world.add(ex);
-  { const exM=M("#a19f95",.85); segs(GEO.exist).forEach(([a,b])=>beam(a,b,WATER-6,LOW-.05,.55,exM,ex,-.28)); }
+  /* existing C-loc that stays: same corrugated sheet, slightly weathered, with its old wood whaler */
+  function oldCloc(a,b,y1,y2,off){const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const m=M("#bdb6a2",.75);m.map=clocTex.clone();m.map.needsUpdate=true;m.map.repeat.set(L/1.5,1);
+    beam(a,b,y1,y2,.55,m,ex,off)}
+  { const wM=M("#7a6447",.9); segs(GEO.exist).forEach(([a,b])=>{oldCloc(a,b,WATER-6,LOW-.05,-.28);beam(a,b,LOW-1.3,LOW-.5,.5,wM,ex,-.8)}); }
   /* neighbors' walls (context) */
   const nb=new THREE.Group(); world.add(nb);
   { const nM=M("#a7a49a",.85), lsM=M("#d2c19a",.95);
@@ -1873,7 +1876,7 @@ function initModel(){
   [GEO.failed,GEO.exist,GEO.newWall].forEach(poly=>segs(poly).forEach(([a,b])=>{beam(a,b,LOW-.1,LOW+.35,1,stM,sg,.25);beam(a,b,LOW-.55,LOW+.2,.15,chM,sg,-.62)}));
   beam([D.x0,5.3],[D.x0,D.z1],LOW-.1,LOW+.35,1,stM,sg,.5); beam([D.x1,0],[D.x1,D.z1],LOW-.1,LOW+.35,1,stM,sg,-.5);
   beam([D.x0,D.z1],[D.x1,D.z1],UP-.65,UP+.35,1,stM,sg,-.5);   // top of the dock
-  beam([D.x0,D.z1],[D.x1,D.z1],LOW-.1,UP-.65,.8,M("#a19f95",.85),ex,-.5);   // existing face under it (context)
+  oldCloc([D.x0,D.z1],[D.x1,D.z1],LOW-.1,UP-.65,-.5);   // existing C-loc face under it (context)
 
   /* ----- 4' concrete block wall ----- */
   const bg=G("block");
