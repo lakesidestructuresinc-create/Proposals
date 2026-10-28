@@ -1659,10 +1659,10 @@ function renderPage(){
   $("#plan").innerHTML=planSVG();
 
   $("#priceRows").innerHTML=P.scope.map((s,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${esc(s.name)}</td><td>${money(s.price)}</td></tr>`).join("")
-    +`<tr class="tot"><td></td><td>Total project investment</td><td>${money(total,true)}</td></tr>`;
+    +`<tr class="tot"><td></td><td>Base price, both lots</td><td>${money(total,true)}</td></tr>`;
   $("#totalSub").textContent=`Lump sum for both lots, for the scope described in this proposal. Valid for ${P.validDays} days from ${fmtDate(P.date)}.`;
   $("#payBar").innerHTML=P.payments.map(p=>`<i style="flex:${p.pct}"></i>`).join("");
-  $("#optBox").innerHTML=`<div class="k">Option · not included in the total</div>`+P.options.map(o=>`<label><input type="checkbox" data-opt="${o.id}"><span style="flex:1"><span class="ot"><span>${esc(o.name)}</span><span>+${money(o.price)}</span></span><p>${esc(o.desc)}</p></span></label>`).join("");
+  $("#optBox").innerHTML=`<div class="k">Optional add-on · not in the base price</div>`+P.options.map(o=>`<label><input type="checkbox" data-opt="${o.id}"><span style="flex:1"><span class="ot"><span>${esc(o.name)}</span><span>+${money(o.price)}</span></span><p>${esc(o.desc)}</p></span></label>`).join("");
   $("#optBox").onchange=e=>{const id=e.target.dataset.opt;if(!id)return;opt[id]=e.target.checked;renderTotals()};
   renderTotals();
   if(P.offer){const o=$("#offer");o.hidden=false;o.innerHTML=`${ICON.tag}<div><b>${esc(P.offer.title)}</b><span>${esc(P.offer.body)}</span></div>`}
