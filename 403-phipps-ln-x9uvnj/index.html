@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>403 Phipps Lane · Lakeside Structures Proposal</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap">
+</head>
+<body>
+<style>
+/* Layout: plan-sheet proposal — light paper sections alternating with deep-lake bands; condensed fabrication-signage display, mono for dimensions */
+:root{
+  --paper:#f3f6f6; --surface:#ffffff; --ink:#13232b; --muted:#566a72; --line:#d6dfe1;
+  --deep:#0f1f27; --deep-2:#182c36; --deep-line:#2a414c; --on-deep:#eaf0f2; --on-deep-muted:#9db2ba;
+  --accent:#e2a72e; --accent-ink:#8f6208; --steel:#2f6a84; --steel-soft:#e3eef2; --good:#2f7d5b;
+  --water:#cfe4ea; --land:#e3e8dc; --plan-line:#13232b;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0c171c; --surface:#122129; --ink:#e4ecee; --muted:#93a8b0; --line:#243840;
+  --deep:#081116; --deep-2:#112028; --deep-line:#25404b; --on-deep:#eaf0f2; --on-deep-muted:#9db2ba;
+  --accent:#e8b042; --accent-ink:#e8b042; --steel:#86bdd4; --steel-soft:#16303b; --good:#6cc49a;
+  --water:#123844; --land:#1c2a22; --plan-line:#d9e3e6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0c171c; --surface:#122129; --ink:#e4ecee; --muted:#93a8b0; --line:#243840;
+  --deep:#081116; --deep-2:#112028; --deep-line:#25404b; --on-deep:#eaf0f2; --on-deep-muted:#9db2ba;
+  --accent:#e8b042; --accent-ink:#e8b042; --steel:#86bdd4; --steel-soft:#16303b; --good:#6cc49a;
+  --water:#123844; --land:#1c2a22; --plan-line:#d9e3e6; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--deep)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:.005em}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(56px,8vw,96px)}
+.band{background:var(--deep);color:var(--on-deep)}
+.alt{background:var(--surface)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px;display:block}
+.band .eyebrow{color:var(--accent)}
+.h2{font-size:clamp(32px,4.4vw,48px);font-weight:700;line-height:1.02;text-transform:uppercase}
+.lede{color:var(--muted);max-width:62ch;margin-top:14px}
+.band .lede{color:var(--on-deep-muted)}
+.sec-head{margin-bottom:36px}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:var(--r);padding:11px 18px;font-weight:600;font-size:15px;border:1px solid transparent;text-decoration:none;transition:background .15s,border-color .15s}
+.btn-accent{background:var(--accent);color:#1b1404}
+.btn-accent:hover{background:#f0bb4c}
+.btn-ghost{border-color:var(--deep-line);color:var(--on-deep);background:transparent}
+.btn-ghost:hover{border-color:var(--on-deep-muted)}
+.link-btn{background:none;border:0;padding:0;color:var(--steel);font-weight:600;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.link-btn:hover{text-decoration:underline}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--deep);color:var(--on-deep);border-bottom:1px solid var(--deep-line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:17px;line-height:1;white-space:nowrap}
+.brand svg{flex:none}
+.brand small{display:block;font-family:var(--f-mono);font-weight:400;font-size:10px;letter-spacing:.14em;color:var(--on-deep-muted);margin-top:3px}
+.nav{display:flex;gap:22px;margin-left:auto;font-size:14px}
+.nav a{color:var(--on-deep-muted);text-decoration:none}
+.nav a:hover{color:var(--on-deep)}
+.top .btn{padding:8px 14px;font-size:14px}
+@media (max-width:860px){.nav{display:none}.top .btn{margin-left:auto}}
+
+/* hero */
+.hero{padding-block:clamp(40px,6vw,72px) 0;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.hero h1{font-size:clamp(46px,7.2vw,88px);line-height:.92;text-transform:uppercase;font-weight:700}
+.hero h1 span{color:var(--accent)}
+.hero .lede{font-size:18px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:14px;color:var(--on-deep-muted)}
+.meta-row b{color:var(--on-deep);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-shot{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:var(--r);overflow:hidden;border:1px solid var(--deep-line);
+  background:var(--deep-2) repeating-linear-gradient(0deg,transparent 0 23px,var(--deep-line) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,var(--deep-line) 23px 24px)}
+.hero-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-shot .tag{position:absolute;left:12px;bottom:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(8,17,22,.78);color:#eaf0f2;padding:5px 9px;border-radius:4px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(36px,5vw,60px);border-top:1px solid var(--deep-line)}
+.stat{padding:22px 18px 26px 0}
+.stat+.stat{padding-left:18px;border-left:1px solid var(--deep-line)}
+.stat b{display:block;font-family:var(--f-display);font-size:clamp(28px,3.4vw,40px);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:6px;font-size:13px;color:var(--on-deep-muted)}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(3){padding-left:0;border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--deep-line)}}
+
+/* overview */
+.ov-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.ov-copy p+p{margin-top:14px}
+.ov-copy .sig{margin-top:22px;font-size:15px;color:var(--muted)}
+.ov-copy .sig b{color:var(--ink)}
+.benefits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.benefit{background:var(--surface);padding:22px}
+.benefit svg{color:var(--steel)}
+.benefit h3{font-size:20px;text-transform:uppercase;margin:12px 0 6px;font-weight:600}
+.benefit p{font-size:15px;color:var(--muted)}
+@media (max-width:860px){.ov-grid{grid-template-columns:1fr}}
+@media (max-width:460px){.benefits{grid-template-columns:1fr}}
+
+/* model */
+.model-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}
+.viewer{position:relative;border-radius:var(--r);overflow:hidden;background:#bfd9e6;aspect-ratio:16/10;max-width:100%;min-height:340px;border:1px solid var(--deep-line)}
+.viewer canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.viewer canvas:active{cursor:grabbing}
+.views-bar{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none}
+.views-bar button{pointer-events:auto;background:rgba(8,17,22,.72);color:#eaf0f2;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 12px;font-size:13px;backdrop-filter:blur(4px)}
+.views-bar button[aria-pressed="true"]{background:var(--accent);color:#1b1404;border-color:transparent}
+.hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-size:12px;background:rgba(8,17,22,.72);color:#dfe8eb;padding:6px 12px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.chip{position:absolute;left:12px;bottom:12px;max-width:min(340px,calc(100% - 24px));background:rgba(8,17,22,.9);color:#eaf0f2;border:1px solid rgba(226,167,46,.6);border-radius:var(--r);padding:12px 14px;font-size:14px}
+.chip b{font-family:var(--f-display);font-size:19px;text-transform:uppercase;display:block;line-height:1.1}
+.chip .p{color:#e8b042;font-family:var(--f-mono);font-size:13px;margin:4px 0 8px}
+.chip .row{display:flex;gap:14px}
+.chip button{background:none;border:0;color:#9fd3e8;padding:0;font-size:13px;font-weight:600}
+.no-gl{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:#13232b;font-size:15px}
+.panel{background:var(--deep-2);border:1px solid var(--deep-line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:18px;font-size:14px}
+.grp-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-deep-muted);margin-bottom:8px}
+.swatches{display:flex;flex-wrap:wrap;gap:6px}
+.sw{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--on-deep);border:1px solid var(--deep-line);border-radius:999px;padding:5px 10px 5px 5px;font-size:13px}
+.sw i{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:block}
+.sw[aria-pressed="true"]{border-color:var(--accent);background:rgba(226,167,46,.12)}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--deep-line);border-radius:var(--r);overflow:hidden}
+.seg button{background:transparent;border:0;color:var(--on-deep-muted);padding:8px;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--on-deep);color:#0f1f27;font-weight:600}
+.toggles{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.tg{display:flex;align-items:center;gap:8px;color:var(--on-deep);font-size:13px;cursor:pointer}
+.tg input{appearance:none;width:30px;height:17px;border-radius:999px;background:var(--deep-line);position:relative;margin:0;cursor:pointer;transition:background .15s;flex:none}
+.tg input::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#eaf0f2;transition:transform .15s}
+.tg input:checked{background:var(--accent)}
+.tg input:checked::after{transform:translateX(13px)}
+.sel-list{border-top:1px solid var(--deep-line);padding-top:14px}
+.sel-list dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.sel-list dt{color:var(--on-deep-muted)}
+.sel-list dd{margin:0;text-align:right;font-weight:600}
+.panel .btn{justify-content:center;width:100%}
+.panel .fine{font-size:12px;color:var(--on-deep-muted)}
+.model-note{font-size:13px;color:var(--on-deep-muted);margin-top:14px;max-width:80ch}
+@media (max-width:960px){.model-grid{grid-template-columns:1fr}.viewer{aspect-ratio:4/3}}
+@media (max-width:520px){.viewer{aspect-ratio:3/4}.hint{display:none}}
+
+/* views */
+.views{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:12px}
+.vshot{position:relative;border-radius:var(--r);overflow:hidden;background:var(--steel-soft);aspect-ratio:16/10;max-width:100%}
+.vshot:first-child{grid-row:span 2;aspect-ratio:auto;min-height:100%}
+.vshot img{width:100%;height:100%;object-fit:cover;display:block}
+.vshot span{position:absolute;left:10px;bottom:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(8,17,22,.78);color:#eaf0f2;padding:4px 8px;border-radius:4px}
+@media (max-width:720px){.views{grid-template-columns:1fr;grid-template-rows:none}.vshot:first-child{grid-row:auto;aspect-ratio:16/10}}
+
+/* scope */
+.scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.sc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,box-shadow .2s}
+.sc.flash{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.sc-head{display:flex;gap:12px;align-items:baseline}
+.sc-num{font-family:var(--f-mono);font-size:12px;color:var(--steel);flex:none}
+.sc h3{font-size:23px;text-transform:uppercase;font-weight:600;line-height:1.05}
+.sc p{font-size:15px;color:var(--muted)}
+.tags{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.tags li{font-family:var(--f-mono);font-size:11.5px;background:var(--steel-soft);color:var(--ink);border-radius:4px;padding:3px 8px}
+.sc-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:12px;border-top:1px dashed var(--line)}
+.sc-foot .price{font-family:var(--f-display);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.sc-note{font-size:13px;color:var(--muted)}
+@media (max-width:760px){.scope{grid-template-columns:1fr}}
+
+/* dimensions */
+.dim-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.detail-fig{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px}
+.detail-scroll{overflow-x:auto}.detail-scroll img{display:block;width:100%;height:auto}
+.detail-fig figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.detail-keys{list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.detail-keys li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.detail-keys b{display:block;margin-bottom:4px}.detail-keys span{color:var(--muted);font-size:14.5px;line-height:1.5}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+.plan svg{display:block;width:100%;min-width:480px;height:auto}
+.plan .water{fill:var(--water)} .plan .land{fill:var(--land)}
+.plan .wall{fill:var(--muted);opacity:.55}
+.plan .deck{fill:var(--surface);stroke:var(--plan-line);stroke-width:1.6}
+.plan .roof{fill:url(#hatch);stroke:var(--plan-line);stroke-width:1;stroke-dasharray:6 4}
+.plan .slip{fill:none;stroke:var(--steel);stroke-width:1;stroke-dasharray:3 3}
+.plan .walk{fill:var(--line);stroke:var(--muted);stroke-width:.8}
+.plan .tread{stroke:var(--plan-line);stroke-width:.7}
+.plan .dl{stroke:var(--accent-ink);stroke-width:1}
+.plan text{font-family:var(--f-mono);font-size:10px;fill:var(--ink)}
+.plan .dt{fill:var(--accent-ink);font-weight:500}
+.plan .lbl{fill:var(--muted);letter-spacing:.08em}
+.plan .stone{fill:var(--muted);opacity:.28;stroke:var(--muted);stroke-width:.6}
+.plan .thin{stroke:var(--muted);stroke-width:.5;opacity:.7}
+.plan .pierc{fill:var(--surface);stroke:var(--plan-line);stroke-width:1.2}
+.plan .pile{fill:var(--surface);stroke:var(--plan-line);stroke-width:.9}
+.plan .hatch-l{stroke:var(--muted);stroke-width:.6;opacity:.5}
+.dims{list-style:none;margin:22px 0 0;padding:0}
+.dims li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.dims li span:last-child{font-family:var(--f-mono);font-size:14px;font-weight:500;white-space:nowrap}
+@media (max-width:860px){.dim-grid{grid-template-columns:1fr}}
+
+/* investment */
+.inv-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
+.ptable{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.ptable table{width:100%;border-collapse:collapse;font-size:15px}
+.ptable td{padding:12px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.ptable td:first-child{font-family:var(--f-mono);font-size:12px;color:var(--steel);width:44px;padding-right:0;padding-top:15px}
+.ptable td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.ptable tr.tot td{background:var(--deep);color:var(--on-deep);border:0;font-weight:600}
+.ptable tr.tot td:last-child{font-family:var(--f-display);font-size:26px;color:var(--accent)}
+.ptable tr.tot td:first-child{color:var(--on-deep-muted)}
+.total-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.total-card .big{font-family:var(--f-display);font-size:clamp(40px,5vw,54px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.total-card .sub{font-size:13px;color:var(--muted);margin-top:6px}
+.paybar{display:flex;height:10px;border-radius:999px;overflow:hidden;margin:20px 0 14px;gap:2px}
+.paybar i{display:block;background:var(--steel)}
+.paybar i:nth-child(even){background:var(--accent)}
+.pays{list-style:none;margin:0;padding:0}
+.pays li{display:grid;grid-template-columns:44px 1fr auto;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
+.pays li b{font-family:var(--f-mono);font-size:12px;color:var(--steel)}
+.pays li span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+.offer{margin-top:14px;display:flex;gap:12px;background:var(--steel-soft);border-radius:var(--r);padding:14px 16px;font-size:14px}
+.offer svg{flex:none;color:var(--steel);margin-top:2px}
+.offer b{display:block}
+.offer span{color:var(--muted);font-size:13px}
+@media (max-width:860px){.inv-grid{grid-template-columns:1fr}}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;list-style:none;margin:0;padding:0}
+.tl li{position:relative;padding:30px 22px 0 0}
+.tl li::before{content:"";position:absolute;top:7px;left:0;right:0;height:2px;background:var(--line)}
+.tl li::after{content:"";position:absolute;top:0;left:0;width:16px;height:16px;border-radius:50%;background:var(--paper);border:3px solid var(--steel)}
+.tl li:last-child::after{border-color:var(--accent);background:var(--accent)}
+.tl .when{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+.tl h3{font-size:24px;text-transform:uppercase;font-weight:600;margin:4px 0 6px}
+.tl p{font-size:15px;color:var(--muted)}
+.tl .pay{display:inline-block;margin-top:10px;font-family:var(--f-mono);font-size:12px;color:var(--ink);background:var(--steel-soft);padding:3px 8px;border-radius:4px}
+@media (max-width:860px){.tl{grid-template-columns:1fr}.tl li{padding:0 0 26px 34px}.tl li::before{top:16px;bottom:0;left:7px;right:auto;width:2px;height:auto}.tl li:last-child::before{display:none}}
+
+/* why */
+.why-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-bottom:40px}
+.why-stats div{border-top:3px solid var(--ink);padding-top:14px}
+.why-stats b{font-family:var(--f-display);font-size:clamp(36px,4.4vw,50px);font-weight:700;line-height:1;display:block}
+.why-stats span{font-size:14px;color:var(--muted);display:block;margin-top:6px}
+.points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 40px}
+.pt{display:flex;gap:14px}
+.pt svg{flex:none;color:var(--good);margin-top:3px}
+.pt b{display:block}
+.pt span{font-size:15px;color:var(--muted)}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:36px}
+.quote{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;font-size:15px}
+.quote cite{display:block;margin-top:10px;font-style:normal;font-size:13px;color:var(--muted)}
+@media (max-width:760px){.why-stats,.points{grid-template-columns:1fr}}
+
+/* terms */
+.terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.term{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.term h3{font-size:21px;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.term p,.term li{font-size:14.5px;color:var(--muted)}
+.term ul{margin:0;padding-left:18px;display:grid;gap:6px}
+@media (max-width:860px){.terms{grid-template-columns:1fr}}
+
+/* accept */
+.acc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.acc-grid .h2{font-size:clamp(36px,5vw,56px)}
+.contact{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;align-items:center}
+.phone{font-family:var(--f-mono);font-size:20px;color:var(--on-deep);user-select:all}
+.copied{font-size:13px;color:var(--accent);margin-top:8px;min-height:1.2em}
+.fallback{margin-top:16px;font-size:14px;color:var(--on-deep-muted)}
+.fallback .phone{font-size:15px}
+.mini{background:none;border:1px solid var(--deep-line);color:var(--on-deep);border-radius:4px;padding:2px 8px;font-size:12px;margin-left:4px}
+.mini:hover{border-color:var(--on-deep-muted)}
+.sign{background:var(--deep-2);border:1px solid var(--deep-line);border-radius:var(--r);padding:24px;font-size:14px}
+.sign .row{display:flex;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--deep-line)}
+.sign .row b{font-family:var(--f-display);font-size:24px;color:var(--accent);font-variant-numeric:tabular-nums}
+.sign .lines{display:grid;grid-template-columns:2fr 1fr;gap:34px 18px;margin-top:40px}
+.sign .lines div{border-top:1px solid var(--on-deep-muted);padding-top:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-deep-muted)}
+@media (max-width:860px){.acc-grid{grid-template-columns:1fr}}
+footer{background:var(--deep);color:var(--on-deep-muted);border-top:1px solid var(--deep-line);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:22px}
+footer b{color:var(--on-deep);font-family:var(--f-display);letter-spacing:.08em;text-transform:uppercase;font-size:15px}
+.brand-logo{display:flex;align-items:center;background:#ffffff;border-radius:6px;padding:5px 10px;flex:none}.brand-logo img{height:34px;width:auto;display:block}
+@media (max-width:440px){.top .wrap{gap:10px}.brand-logo{padding:4px 7px}.brand-logo img{height:26px}.top .btn{padding:7px 12px}}
+</style>
+<style>
+.optbox{margin-top:14px;border:1px dashed var(--line);border-radius:var(--r);padding:14px 16px;background:var(--surface)}.optbox label{display:flex;gap:12px;align-items:flex-start;cursor:pointer}.optbox input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}.optbox .ot{display:flex;justify-content:space-between;gap:12px;font-weight:700}.optbox p{margin:4px 0 0;color:var(--muted);font-size:14.5px;line-height:1.5}.optbox .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gal figure{margin:0;position:relative;border-radius:var(--r);overflow:hidden;background:var(--steel-soft);aspect-ratio:4/3}
+.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.gal figcaption{position:absolute;left:10px;bottom:10px;right:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(8,17,22,.78);color:#eaf0f2;padding:5px 8px;border-radius:4px;width:fit-content}
+@media (max-width:760px){.gal{grid-template-columns:1fr}}
+.rend{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--deep-line)}
+.rend img{width:100%;height:auto;display:block}
+.rend-cap{font-size:13px;color:var(--on-deep-muted);margin-top:10px}
+.keys{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.keys li{background:var(--deep-2);border:1px solid var(--deep-line);border-radius:var(--r);padding:14px 16px;font-size:14.5px;color:var(--on-deep-muted)}
+.keys b{display:block;color:var(--on-deep);font-family:var(--f-display);font-size:19px;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.sheets{display:grid;gap:28px}
+.sheet-fig{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px}
+.sheet-fig a{display:block}
+.sheet-fig img{display:block;width:100%;height:auto}
+.sheet-fig figcaption{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5}
+.sheet-fig figcaption b{color:var(--ink)}
+.stampnote{display:flex;gap:12px;align-items:flex-start;background:#fbeaea;border:1px solid #e7b6b6;color:#7a1d1d;border-radius:var(--r);padding:12px 16px;font-size:14.5px;margin-bottom:22px}
+:root[data-theme="dark"] .stampnote{background:#3a1717;border-color:#6b2a2a;color:#f3caca}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stampnote{background:#3a1717;border-color:#6b2a2a;color:#f3caca}}
+.optbox label+label{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand-logo" href="#" aria-label="Lakeside Structures Inc."><img src="logo.png" alt="Lakeside Structures Inc." width="218" height="34"></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#overview">Overview</a><a href="#site">Photos</a><a href="#design">Design</a><a href="#plans">Plans</a><a href="#scope">Scope</a><a href="#investment">Investment</a><a href="#timeline">Timeline</a>
+    </nav>
+    <a class="btn btn-accent" href="#accept">Approve</a>
+  </div>
+</header>
+
+<section class="hero band">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" id="heroEyebrow">Proposal</span>
+        <h1 id="heroTitle">Flagstone Shoreline <span>Proposal</span></h1>
+        <p class="lede" id="heroLede"></p>
+        <div class="meta-row" id="heroMeta"></div>
+        <div class="hero-cta">
+          <a class="btn btn-accent" href="#design">See the design</a>
+          <a class="btn btn-ghost" href="#investment">View investment</a>
+        </div>
+      </div>
+      <div class="hero-shot"><img src="rendering-option-c.jpg" alt="Rendering of the finished flagstone shoreline seen from the river, with the water feature outlet and the recessed stair, landing and kayak launch"><span class="tag">Conceptual rendering</span></div>
+    </div>
+    <div class="stats" id="heroStats"></div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="wrap ov-grid">
+    <div class="ov-copy">
+      <span class="eyebrow">Project overview</span>
+      <h2 class="h2" id="ovTitle"></h2>
+      <div id="ovBody" style="margin-top:20px"></div>
+    </div>
+    <div class="benefits" id="benefits"></div>
+  </div>
+</section>
+
+<section id="site" class="alt">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Your property today</span><h2 class="h2">The bank, the west run and the spring basin</h2>
+      <p class="lede">Photos from our site visit on October 21, 2026. The bank is eroding along its whole length, the cream quarry blocks sit at the waterline, and the spring basin has washed out under its liner.</p></div>
+    <div class="gal">
+      <figure><img src="site-bank.jpg" alt="Eroding riverbank looking upstream along the east run" loading="lazy"><figcaption>East run · eroding bank</figcaption></figure>
+      <figure><img src="site-west-run.jpg" alt="West run of the bank toward the No Trespassing sign" loading="lazy"><figcaption>West run today</figcaption></figure>
+      <figure><img src="site-basin.jpg" alt="Round stone spring basin with debris" loading="lazy"><figcaption>Spring basin</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="design" class="band">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Option C · the design</span><h2 class="h2">How it will look from the river</h2>
+      <p class="lede">Gray stacked flagstone on dark heavy stone at the waterline, the top flush with your lawn, and one recessed space for steps, a landing with a bench, and a kayak launch.</p></div>
+    <figure class="rend"><img src="rendering-option-c.jpg" alt="Conceptual rendering of the Option C flagstone shoreline from the river" loading="lazy"></figure>
+    <p class="rend-cap">Conceptual rendering, not to scale. Final stone sizes, colors and grades will vary; the kayak steps take the west half of the space and the cleats aren't shown.</p>
+    <ul class="keys" id="keys"></ul>
+  </div>
+</section>
+
+<section id="plans" class="alt">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Plans &amp; details</span><h2 class="h2">The drawings behind this proposal</h2>
+      <p class="lede">Tap any drawing to open it full size.</p></div>
+    <div class="stampnote"><strong>Conceptual design only — not for construction.</strong>&nbsp;These drawings show design intent for this proposal. Locations were taken from site photos; everything is field-verified, surveyed and engineered as required before construction.</div>
+    <div class="sheets">
+      <figure class="sheet-fig"><a href="plan-c1c.jpg" target="_blank" rel="noopener"><img src="plan-c1c.jpg" alt="Sheet C-1C, Option C conceptual shoreline plan" loading="lazy"></a>
+        <figcaption><b>Sheet C-1C · Conceptual shoreline plan.</b> 118 ft of wall: the 54 ft west run, the 10 ft main water feature and the 54 ft east run, with the combined stair, landing and kayak launch about 85 to 97 ft from the west end.</figcaption></figure>
+      <figure class="sheet-fig"><a href="detail-d3.jpg" target="_blank" rel="noopener"><img src="detail-d3.jpg" alt="Detail D-3, typical section through the combined stair, landing and kayak launch" loading="lazy"></a>
+        <figcaption><b>Detail D-3 · Flagstone wall and combined stair / landing / kayak launch.</b> Section and plan of the recessed space. Piles are 4-1/2 in diameter (the drawing note showing 6 in is superseded by this proposal).</figcaption></figure>
+      <figure class="sheet-fig"><a href="detail-d1.jpg" target="_blank" rel="noopener"><img src="detail-d1.jpg" alt="Detail D-1, typical section of the structure behind and below the wall" loading="lazy"></a>
+        <figcaption><b>Detail D-1 · Structure behind and below the wall.</b> Referenced by D-3 for the piles, ledger, C-loc cut-off, drainage gravel, gravel base and riprap toe. In Option C the stone above the water is mortared flagstone per D-3, not the boulders shown here, and piles are 4-1/2 in diameter.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Scope of work</span><h2 class="h2">Everything included in your project</h2>
+      <p class="lede">Each item matches a line in the investment table below.</p></div>
+    <div class="scope" id="scopeList"></div>
+  </div>
+</section>
+
+<section id="investment" class="alt">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Investment</span><h2 class="h2">Clear, line-by-line pricing</h2>
+      <p class="lede">One lump sum for the shoreline. The spring basin is optional: add either part below and the total updates.</p></div>
+    <div class="inv-grid">
+      <div><div class="ptable"><table><tbody id="priceRows"></tbody></table></div><div class="optbox" id="optBox"></div></div>
+      <div>
+        <div class="total-card">
+          <span class="eyebrow">Total investment</span>
+          <div class="big" id="totalBig"></div>
+          <p class="sub" id="totalSub"></p>
+          <div class="paybar" id="payBar" aria-hidden="true"></div>
+          <ul class="pays" id="payList"></ul>
+        </div>
+        <div class="offer" id="offer" hidden></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Timeline</span><h2 class="h2">From signature to a finished shoreline</h2>
+      <p class="lede" id="tlLede"></p></div>
+    <ol class="tl" id="tlList"></ol>
+  </div>
+</section>
+
+<section id="why" class="alt">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Why Lakeside Structures</span><h2 class="h2">Central Texas marine construction, start to finish</h2></div>
+    <div class="why-stats" id="whyStats"></div>
+    <div class="points" id="whyPoints"></div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Terms</span><h2 class="h2">Warranty, exclusions and notes</h2></div>
+    <div class="terms" id="termsGrid"></div>
+  </div>
+</section>
+
+<section id="accept" class="band">
+  <div class="wrap acc-grid">
+    <div>
+      <span class="eyebrow">Acceptance</span>
+      <h2 class="h2">Ready to move forward?</h2>
+      <p class="lede" id="accLede"></p>
+      <div class="contact">
+        <a class="btn btn-accent" id="textApprove" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5l2.2 2.2 4.8-4.8"/></svg>
+          <span id="textApproveLbl">Text to approve</span></a>
+        <button class="btn btn-ghost" type="button" id="copyApprove">Copy message</button>
+      </div>
+      <p class="fallback">Message doesn't open? Text <span class="phone" id="accPhone"></span> <button class="mini" type="button" id="copyPhone">Copy number</button> and paste the message.</p>
+      <p class="copied" id="phoneMsg" aria-live="polite"></p>
+    </div>
+    <div class="sign">
+      <div class="row"><span id="signTitle"></span><b id="signTotal"></b></div>
+      <div class="lines">
+        <div id="signClient">Accepted by</div><div>Date</div>
+        <div id="signCo">Lakeside Structures Inc.</div><div>Date</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><b id="ftName">Lakeside Structures Inc.</b><span id="ftInfo"></span></div></footer>
+
+<script>
+/* PROPOSAL DATA — 403 Phipps Lane, Blanco TX. Option C Proposal & Estimate dated October 28, 2026
+   (plan C-1C rev 1, detail D-3 rev 1, detail D-1). Any price change must also be made in the Word proposal. */
+const P = {
+  company:{ name:"Lakeside Structures Inc.", city:"New Braunfels, TX", phone:"(830) 715-5500", web:"www.lakesidestructures.com", rep:"Vladimir" },
+  client:{ name:"Property Owner", property:"403 Phipps Lane, Blanco, TX 78606" },
+  title:"Flagstone Shoreline Proposal",
+  date:"2026-10-28", validDays:30,
+  lede:"A stacked flagstone wall along 118 feet of the Blanco River, flush with your lawn, with one recessed space for lawn steps, a landing with a built-in bench, and a kayak launch.",
+  stats:[["$TOTAL","Shoreline investment"],["118 LF","Flagstone shoreline"],["12′ × 8′","Stair, landing & kayak launch"],["No deposit","Billed in 3 progress draws"]],
+  overviewTitle:"Stop the erosion and get a riverfront you can use",
+  overview:[
+    "Thank you for walking the property with us. The bank is in the floodway and keeps eroding: flood currents push one way and then the other, and the springs along the bank wash the soil out from behind anything placed there. The cream quarry blocks at the waterline haven't held, and a large flagstone that was set on the slope has slid into the river.",
+    "Option C builds a stacked flagstone wall along about 118 ft: a 54 ft west run, the 10 ft main water feature and a 54 ft east run. Gray to weathered tan-gray Texas flagstone, laid in full mortar, sits on dark heavy stone at the waterline, so no cream block shows. The top is flush with the lawn everywhere. Behind and under the stone, steel piles driven to bedrock and a continuous C-loc cut-off hold the bank so floods and springs can't wash it out."
+  ],
+  benefits:[
+    {icon:"shield", t:"Built for a floodway", d:"Piles to bedrock, a C-loc cut-off and a riprap toe keyed in at the face. Every flagstone joint is fully mortared, and the cap is pinned."},
+    {icon:"leaf", t:"Natural stone look", d:"Gray stacked flagstone on dark stone at the waterline, with the cream quarry blocks removed or buried out of sight."},
+    {icon:"stair", t:"Easy water access", d:"Lawn steps down to a landing with a built-in bench, then kayak-launch steps to just above the water. Nothing sticks out into the river."},
+    {icon:"deck", t:"Flush with the lawn", d:"No raised wall, curb or lip anywhere. The lawn runs right to the cap, and four flush cleats fold flat when not in use."}
+  ],
+  keys:[
+    ["118 ft of wall","54′ west run · 10′ water feature · 54′ east run, both ends keyed 8–10′ into the bank."],
+    ["Flagstone above water","Mortared stacked flagstone with a 2–3″ × 18–24″ cap flush with the lawn."],
+    ["Dark stone below","Heavy quarry stone from the river bottom to the waterline, riprap keyed in at the face."],
+    ["One combined space","3 lawn steps → landing about 2′-6″ above the water with a bench → 4 kayak steps, 6′ wide."],
+    ["Water feature","The wall ties into both sides of the existing spillway with a stone-faced headwall; the opening stays clear."],
+    ["Flagstone table","The slab that slid into the river comes out and goes on two stone piers near the top of the steps."]
+  ],
+  scope:[
+    {id:"prep", name:"Site Preparation", price:15250, desc:"Mobilize through the property gate, set erosion and turbidity controls, protect the big tree at the outlet and the existing stone channel with its pumps, pull out the cream quarry blocks and fallen rock, and cut back the bank for the new wall.", tags:["Turbidity curtain","Tree protection","Quarry blocks removed"]},
+    {id:"structure", name:"Hidden Structure", price:70650, desc:"4-1/2″ steel pipe piles driven to refusal on bedrock behind the stone, a ledger across the pile tops at about water level, and a continuous C-loc sheet pile cut-off behind the wall so floods and springs can't wash the soil out.", tags:["30 piles, 4-1/2″","118 LF C-loc","Ledger at water level"]},
+    {id:"foundation", name:"Foundation & Riprap Toe", price:41950, desc:"Dark heavy quarry stone from the river bottom up to the waterline on a 6″ compacted gravel base, with D50 = 12″ riprap keyed in at the wall face, its top flush with the river bottom.", tags:["≈ 92 tons quarry stone","≈ 30 tons riprap","No projection"]},
+    {id:"wall", name:"Stacked Flagstone Wall", price:79600, desc:"Gray to weathered tan-gray Texas flagstone above the water, every bed and head joint fully mortared with raked joints, finished with a 2–3″ flagstone cap mortared and pinned flush with the lawn. Drainage gravel in filter fabric and 2″ weeps every 6 ft behind it.", tags:["≈ 556 sq ft of face","Pinned cap, 122 LF","Weeps @ 6′"]},
+    {id:"ends", name:"End Returns & Spillway Tie-In", price:7000, desc:"Both ends of the wall turn back 8–10 ft into the bank so floodwater can't get around them, and the wall ties into both sides of the existing spillway with a stone-faced headwall. The outlet stays open.", tags:["2 end returns","Stone-faced headwall"]},
+    {id:"space", name:"Stair, Landing & Kayak Launch", price:28300, desc:"One space about 12′ × 8′ cut into the east run: three broad flagstone steps from the lawn, a flagstone landing about 2′-6″ above the water on a reinforced slab with a built-in bench, and four 6′-wide kayak steps down to just above normal water.", tags:["12′ × 8′ recessed","Built-in bench","4 kayak steps, 6′ wide"]},
+    {id:"cleats", name:"Cleats & Flagstone Table", price:5150, desc:"Four dark aluminum pop-up cleats set flush in the coping at the landing and kayak steps. The flagstone slab in the river is recovered and set as a table on two stone piers.", tags:["4 flush cleats","Recovered slab"]},
+    {id:"grade", name:"Final Grade & Cleanup", price:6100, desc:"Grade the lawn flush to the cap, regrade the equipment route, remove debris and erosion controls, and demobilize.", tags:["Lawn to cap","Cleanup"]}
+  ],
+  options:[
+    {id:"b1", name:"Spring Basin · Clean Out, New Pumps & Test", price:8600, desc:"Pump down and clean out the basin, move the fish and turtles to the river, replace both 1/2 HP sump pumps, run the system and tell you what works. Plumbing repairs found are quoted separately."},
+    {id:"b2", name:"Spring Basin · Deepen & Stone-Line", price:14300, desc:"Dig the 6 ft basin to about 5 ft deep, 3–4 ft below river level, so it holds clean spring water like a hand-dug well, and line it with mortared stone. Exploratory, at your request: no warranty on water level, clarity or new springs."}
+  ],
+  payments:[
+    {pct:40, label:"Piles, C-loc and quarry stone foundation in"},
+    {pct:40, label:"Flagstone wall, cap, riprap and outlet tie-in complete"},
+    {pct:20, label:"Final completion: landing, steps, cleats, table and grade"}
+  ],
+  offer:{title:"No deposit", body:"You're billed in three progress draws as the shoreline work is completed. Spring basin items are billed when each is done. Invoices are due net 10, coordinated through your Ranch Manager."},
+  timelineLede:"About 40 to 50 working days on site for the shoreline, after the permit is issued. Rain days, high water and mortar cure time don't count. The spring basin adds 6 to 8 days and can run while the excavator is on site.",
+  timeline:[
+    {when:"Now", t:"Approve", d:"Accept the proposal and choose the stone from samples. We prepare the contract and the permit submittal."},
+    {when:"Permit", t:"Blanco County", d:"We file with the Blanco County floodplain administrator and any agency with jurisdiction, and survey and field-verify the layout."},
+    {when:"40–50 working days", t:"Construction", d:"Bank prep, piles and C-loc, quarry stone foundation, flagstone wall and cap, riprap, outlet tie-in, then the stair, landing and kayak launch.", pay:"Draw 1 · Draw 2"},
+    {when:"Completion", t:"Final walkthrough", d:"Cleats, flagstone table and final grade, then we walk the finished shoreline with you.", pay:"Draw 3"}
+  ],
+  why:{
+    stats:[["Marine","Waterfront construction specialists"],["In-house","Excavators, barge, fabrication and permitting"],["Floodway","Shorelines rebuilt after the Hill Country floods"]],
+    points:[["Root cause first","The wall is held from behind and below by piles and a C-loc cut-off, not just stacked stone at the edge."],
+            ["Built for the springs","Drainage gravel, filter fabric and weeps let spring water out without carrying soil with it."],
+            ["No deposit","You pay in three draws as the work gets done."],
+            ["Fully insured","Workers' comp, general liability, marine and barge coverage. Certificates come with the contract."]]
+  },
+  warranty:"Lakeside Structures Inc. warrants its workmanship for one (1) year from substantial completion under normal use. A flood that overtops the wall can still move soil and damage landscaping; flood damage is not covered. The spring basin work is exploratory, at your request, and carries no warranty.",
+  exclusions:["Permit fees, billed at cost","Engineering, survey, sealed drawings or a No-Rise certification (priced for your approval if the County requires it)","Cofferdam or pumping the river down","Rock digging or drilling beyond the unit prices","Work on the existing spillway, channels and footbridge beyond the tie-in","Relocating the existing pumps and PVC in the stone channel (protected in place)","Sod, irrigation, landscaping and electrical","Plumbing repairs found in the spring basin test"],
+  notes:["The plan, details and rendering are conceptual design only and not for construction. Tree and feature locations were taken from site photos; lengths, elevations and the landing location are field-verified before final design.","Stone allowances: flagstone $14 per sq ft of wall face, cap $12 per LF, paving $9 per sq ft, foundation stone $120 per ton. You pick from samples; a pricier pick changes the price by the difference.","If the measured length changes, the wall adjusts at $1,750 per LF. Extra flagstone face is $95 per sq ft and extra pipe piles are $730 each.","The property is in unincorporated Blanco County, in the floodway. Pricing is valid for 30 days from the proposal date."]
+};
+/* helpers */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money=(n,cents)=>n.toLocaleString("en-US",{style:"currency",currency:"USD",minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0});
+const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+const total=P.scope.reduce((a,s)=>a+s.price,0);
+const opt={b1:false,b2:false};
+const optSum=()=>P.options.reduce((a,o)=>a+(opt[o.id]?o.price:0),0);
+const grand=()=>total+optSum();
+const payAmt=()=>{const a=P.payments.map(p=>Math.round(total*p.pct/1000)*10);a[a.length-1]=total-a.slice(0,-1).reduce((x,y)=>x+y,0);return a};
+const ICON={
+  shield:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
+  deck:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 9h18M5 9v11M19 9v11M12 9v11M3 4l9 3 9-3"/></svg>',
+  stair:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 20h5v-5h5v-5h5V5h3"/><path d="M3 15l15-12"/></svg>',
+  leaf:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19l8-8"/></svg>',
+  check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 10"/></svg>',
+  tag:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.4"/></svg>'
+};
+async function copyText(txt,msgEl,ok){try{await navigator.clipboard.writeText(txt);msgEl.textContent=ok}catch(e){msgEl.textContent="Copy blocked here. Select the text and copy it manually."}}
+const chosen=()=>P.options.filter(o=>opt[o.id]);
+function renderTotals(){
+  const pa=payAmt(), ch=chosen();
+  $("#totalBig").textContent=money(grand());
+  $("#totalSub").textContent=(ch.length?`Shoreline ${money(total)} + spring basin ${money(optSum())}. `:"Shoreline lump sum. ")+`Valid for ${P.validDays} days from ${fmtDate(P.date)}.`;
+  $("#payList").innerHTML=P.payments.map((p,i)=>`<li><b>${p.pct}%</b><span>${esc(p.label)}</span><span>${money(pa[i])}</span></li>`).join("")
+    +ch.map(o=>`<li><b>Basin</b><span>${esc(o.name.replace("Spring Basin · ",""))} · billed when done</span><span>${money(o.price)}</span></li>`).join("");
+  $("#signTotal").textContent=money(grand(),true);
+}
+function renderPage(){
+  const C=P.company;
+  $("#heroEyebrow").textContent=`${C.name} · Option C`;
+  $("#heroLede").textContent=P.lede;
+  $("#heroMeta").innerHTML=`<span>Prepared for <b>${esc(P.client.name)}</b></span><span>Property <b>${esc(P.client.property)}</b></span><span>Date <b>${fmtDate(P.date)}</b></span>`;
+  $("#heroStats").innerHTML=P.stats.map(([b,s])=>`<div class="stat"><b>${b==="$TOTAL"?money(total):esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+  $("#ovTitle").textContent=P.overviewTitle;
+  $("#ovBody").innerHTML=P.overview.map(p=>`<p>${esc(p)}</p>`).join("")+`<p class="sig"><b>${esc(C.rep)}</b>, ${esc(C.name)}<br>${esc(C.phone)} · ${esc(C.web)}</p>`;
+  $("#benefits").innerHTML=P.benefits.map(b=>`<div class="benefit">${ICON[b.icon]}<h3>${esc(b.t)}</h3><p>${esc(b.d)}</p></div>`).join("");
+  $("#keys").innerHTML=P.keys.map(([b,s])=>`<li><b>${esc(b)}</b>${esc(s)}</li>`).join("");
+  $("#scopeList").innerHTML=P.scope.map((s,i)=>`<article class="sc" id="sc-${s.id}">
+    <div class="sc-head"><span class="sc-num">${String(i+1).padStart(2,"0")}</span><h3>${esc(s.name)}</h3></div>
+    <p>${esc(s.desc)}</p><ul class="tags">${s.tags.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+    <div class="sc-foot"><span class="price">${money(s.price)}</span></div></article>`).join("");
+  $("#priceRows").innerHTML=P.scope.map((s,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${esc(s.name)}</td><td>${money(s.price)}</td></tr>`).join("")
+    +`<tr class="tot"><td></td><td>Shoreline, Option C</td><td>${money(total,true)}</td></tr>`;
+  $("#payBar").innerHTML=P.payments.map(p=>`<i style="flex:${p.pct}"></i>`).join("");
+  $("#optBox").innerHTML=`<div class="k">Optional · spring basin (separate from the shoreline)</div>`+P.options.map(o=>`<label><input type="checkbox" data-opt="${o.id}"><span style="flex:1"><span class="ot"><span>${esc(o.name)}</span><span>+${money(o.price)}</span></span><p>${esc(o.desc)}</p></span></label>`).join("");
+  $("#optBox").onchange=e=>{const id=e.target.dataset.opt;if(!id)return;opt[id]=e.target.checked;renderTotals();if(window.__setHref)window.__setHref()};
+  renderTotals();
+  const o=$("#offer");o.hidden=false;o.innerHTML=`${ICON.tag}<div><b>${esc(P.offer.title)}</b><span>${esc(P.offer.body)}</span></div>`;
+  $("#tlLede").textContent=P.timelineLede;
+  $("#tlList").innerHTML=P.timeline.map(t=>`<li><span class="when">${esc(t.when)}</span><h3>${esc(t.t)}</h3><p>${esc(t.d)}</p>${t.pay?`<span class="pay">${esc(t.pay)}</span>`:""}</li>`).join("");
+  $("#whyStats").innerHTML=P.why.stats.map(([b,s])=>`<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+  $("#whyPoints").innerHTML=P.why.points.map(([b,s])=>`<div class="pt">${ICON.check}<div><b>${esc(b)}</b><span>${esc(s)}</span></div></div>`).join("");
+  $("#termsGrid").innerHTML=`<div class="term"><h3>Warranty</h3><p>${esc(P.warranty)}</p></div>
+    <div class="term"><h3>Exclusions</h3><ul>${P.exclusions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    <div class="term"><h3>Additional notes</h3><ul>${P.notes.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`;
+  $("#accLede").textContent=`Accepting this proposal authorizes ${C.name} to prepare the construction contract and begin the permit submittal. Check the spring basin options above first if you want them. Questions? Call or text ${C.rep}.`;
+  $("#accPhone").textContent=C.phone;
+  $("#signTitle").textContent=P.title+" · Option C";
+  $("#signClient").textContent="Accepted by · Owner or authorized representative"; $("#signCo").textContent=C.name;
+  $("#ftName").textContent=C.name; $("#ftInfo").textContent=`${C.city} · ${C.phone} · ${C.web}`;
+  $("#copyPhone").onclick=()=>copyText(C.phone,$("#phoneMsg"),"Number copied");
+  const approveMsg=()=>{const ch=chosen();return `Hi ${C.rep}, I approve the Option C flagstone shoreline proposal for ${P.client.property}: shoreline ${money(total,true)}`+(ch.length?`, plus ${ch.map(x=>x.name.replace("Spring Basin · ","spring basin ")+" ("+money(x.price,true)+")").join(" and ")}, total ${money(grand(),true)}`:", without the spring basin")+`. Please send the agreement and next steps.`};
+  const smsTo="+1"+C.phone.replace(/\D/g,"").slice(-10);
+  const ta=$("#textApprove"); $("#textApproveLbl").textContent=`Text ${C.rep} to approve`;
+  const setHref=()=>{ta.href=`sms:${smsTo}?&body=${encodeURIComponent(approveMsg())}`};
+  window.__setHref=setHref; setHref(); ta.addEventListener("pointerdown",setHref); ta.addEventListener("focus",setHref);
+  ta.addEventListener("click",()=>{setHref();$("#phoneMsg").textContent="If your messaging app opened, the approval message is ready to send."});
+  $("#copyApprove").onclick=()=>copyText(approveMsg(),$("#phoneMsg"),`Message copied. Paste it in a text to ${C.rep} at ${C.phone}.`);
+}
+renderPage();
+</script>
+</body>
+</html>
