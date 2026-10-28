@@ -1798,7 +1798,7 @@ function initModel(){
 
   const scopeMats={}, finMats={block:[],conc:[]}, cache={};
   const BASE={
-    cloc:{color:"#c9c2ae",roughness:.6,metalness:0},
+    cloc:{color:"#cfc8b4",roughness:.65,metalness:0},
     steel:{color:"#2d3133",roughness:.5,metalness:.55},
     conc:{color:FIN.conc[0][1],roughness:.9,metalness:0,fin:"conc"},
     block:{color:FIN.block[0][1],roughness:.95,metalness:0,fin:"block"}
@@ -1849,21 +1849,25 @@ function initModel(){
   const clocTex=(()=>{const c=document.createElement("canvas");c.width=128;c.height=8;const g=c.getContext("2d");
     for(let i=0;i<128;i++){const v=200+Math.round(40*Math.sin(i/128*Math.PI*2));g.fillStyle=`rgb(${v},${v},${v})`;g.fillRect(i,0,1,8)}
     const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t})();
-  function clocWall(poly,scope,isNew){
-    const g=G(scope);
-    segs(poly).forEach(([a,b])=>{const L=Math.hypot(b[0]-a[0],b[1]-a[1]);
-      const m=isNew?mat(scope,"cloc",L):M("#a8a69c",.8);
-      if(isNew&&!m.map){m.map=clocTex.clone();m.map.needsUpdate=true;m.map.repeat.set(L/1.5,1)}
-      beam(a,b,WATER-6,LOW-.05,.55,m,g,-.28);
-      if(isNew){const s=mat(scope,"steel");beam(a,b,LOW-1.1,LOW-.55,.42,s,g,-.78);beam(a,b,WATER+.6,WATER+1.15,.42,s,g,-.78)}});
+  /* C-loc sheet pile with its real profile: 18" panels, trapezoid ribs 6" deep, 1" wall, ribs toward the water */
+  function clocMesh(a,b,y1,y2,m,par){const dx=b[0]-a[0],dz=b[1]-a[1],L=Math.hypot(dx,dz),P=1.5,D=.5,T=.09;
+    const prof=[];for(let u=0;u<L+P;u+=P){[[0,0],[.3,0],[.5,D],[1.0,D],[1.2,0]].forEach(([du,w])=>{const x=u+du;if(x<=L)prof.push([x,w])})}
+    if(prof[prof.length-1][0]<L)prof.push([L,prof[prof.length-1][1]]);
+    const sh=new THREE.Shape();prof.forEach(([x,w],i)=>i?sh.lineTo(x,w):sh.moveTo(x,w));
+    for(let i=prof.length-1;i>=0;i--)sh.lineTo(prof[i][0],prof[i][1]+T);
+    const g=new THREE.ExtrudeGeometry(sh,{depth:y2-y1,bevelEnabled:false,curveSegments:1});g.rotateX(-Math.PI/2);
+    const me=new THREE.Mesh(g,m);me.position.set(a[0],y1,a[1]);me.rotation.y=-Math.atan2(dz,dx);me.castShadow=true;me.receiveShadow=true;par.add(me);return me}
+  function clocWall(poly,scope){
+    const g=G(scope), m=mat(scope,"cloc"), s=mat(scope,"steel");
+    segs(poly).forEach(([a,b])=>{clocMesh(a,b,WATER-6,LOW-.05,m,g);beam(a,b,LOW-1.1,LOW-.55,.42,s,g,-.85);beam(a,b,WATER+.6,WATER+1.15,.42,s,g,-.85)});
   }
   clocWall(GEO.failed,"cloc60",true);
   clocWall(GEO.newWall,"cloc90",true);
   const ex=new THREE.Group(); world.add(ex);
   /* existing C-loc that stays: same corrugated sheet, slightly weathered, with its old wood whaler */
-  function oldCloc(a,b,y1,y2,off){const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const m=M("#bdb6a2",.75);m.map=clocTex.clone();m.map.needsUpdate=true;m.map.repeat.set(L/1.5,1);
-    beam(a,b,y1,y2,.55,m,ex,off)}
-  { const wM=M("#7a6447",.9); segs(GEO.exist).forEach(([a,b])=>{oldCloc(a,b,WATER-6,LOW-.05,-.28);beam(a,b,LOW-1.3,LOW-.5,.5,wM,ex,-.8)}); }
+  const oldM=M("#b3ab96",.8);
+  function oldCloc(a,b,y1,y2){clocMesh(a,b,y1,y2,oldM,ex)}
+  { const wM=M("#7a6447",.9); segs(GEO.exist).forEach(([a,b])=>{oldCloc(a,b,WATER-6,LOW-.05);beam(a,b,LOW-1.3,LOW-.5,.5,wM,ex,-.85)}); }
   /* neighbors' walls (context) */
   const nb=new THREE.Group(); world.add(nb);
   { const nM=M("#a7a49a",.85), lsM=M("#d2c19a",.95);
@@ -1873,10 +1877,10 @@ function initModel(){
   /* ----- concrete strip on steel channel: full C-loc + top and sides of the wood dock ----- */
   const stM=mat("strip","conc"), chM=mat("strip","steel"), sg=G("strip");
   const D=GEO.dock;
-  [GEO.failed,GEO.exist,GEO.newWall].forEach(poly=>segs(poly).forEach(([a,b])=>{beam(a,b,LOW-.1,LOW+.35,1,stM,sg,.25);beam(a,b,LOW-.55,LOW+.2,.15,chM,sg,-.62)}));
+  [GEO.failed,GEO.exist,GEO.newWall].forEach(poly=>segs(poly).forEach(([a,b])=>{beam(a,b,LOW-.1,LOW+.35,1,stM,sg,.25);beam(a,b,LOW-.55,LOW+.2,.15,chM,sg,-.7)}));
   beam([D.x0,5.3],[D.x0,D.z1],LOW-.1,LOW+.35,1,stM,sg,.5); beam([D.x1,0],[D.x1,D.z1],LOW-.1,LOW+.35,1,stM,sg,-.5);
   beam([D.x0,D.z1],[D.x1,D.z1],UP-.65,UP+.35,1,stM,sg,-.5);   // top of the dock
-  oldCloc([D.x0,D.z1],[D.x1,D.z1],LOW-.1,UP-.65,-.5);   // existing C-loc face under it (context)
+  oldCloc([D.x0,D.z1],[D.x1,D.z1],LOW-.1,UP-.65);   // existing C-loc face under it (context)
 
   /* ----- 4' concrete block wall ----- */
   const bg=G("block");
