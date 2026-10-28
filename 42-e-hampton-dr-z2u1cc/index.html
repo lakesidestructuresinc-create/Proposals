@@ -293,6 +293,7 @@ footer b{color:var(--on-deep);font-family:var(--f-display);letter-spacing:.08em;
     <a class="btn btn-accent" href="#accept">Approve</a>
   </div>
 </header>
+<style>.optbox{margin-top:14px;border:1px dashed var(--line);border-radius:var(--r);padding:14px 16px;background:var(--surface)}.optbox label{display:flex;gap:12px;align-items:flex-start;cursor:pointer}.optbox input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}.optbox .ot{display:flex;justify-content:space-between;gap:12px;font-weight:700}.optbox p{margin:4px 0 0;color:var(--muted);font-size:14.5px;line-height:1.5}.optbox .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}</style>
 <section class="hero band">
   <div class="wrap">
     <div class="hero-grid">
@@ -418,7 +419,7 @@ footer b{color:var(--on-deep);font-family:var(--f-display);letter-spacing:.08em;
     <div class="sec-head"><span class="eyebrow">Investment</span><h2 class="h2">Clear, line-by-line pricing</h2>
       <p class="lede">Every line item is priced on its own so you can see exactly where your investment goes. One price covers both lots.</p></div>
     <div class="inv-grid">
-      <div class="ptable"><table><tbody id="priceRows"></tbody></table></div>
+      <div><div class="ptable"><table><tbody id="priceRows"></tbody></table></div><div class="optbox" id="optBox"></div></div>
       <div>
         <div class="total-card">
           <span class="eyebrow">Total investment</span>
@@ -1578,6 +1579,7 @@ const P = {
     {pct:40, label:"Draw 2 · steel channel and concrete strip, block wall and ramp complete"},
     {pct:20, label:"Draw 3 · final completion: stairs, final grade and cleanup"}
   ],
+  options:[{id:"paint",name:"Paint All New Steel",price:6500,desc:"Prime and paint the new steel tube whalers and the steel channel along the wall. Added to Draw 3 if you choose it."}],
   offer:{title:"No deposit", body:"We don't take deposits. You're billed in three progress draws as the work is completed. Invoices are due net 10."},
   timelineLede:"Target start is the second half of January 2027, after permits, while the river is still down. The bulkhead and block wall are finished before your pool goes in.",
   timeline:[
@@ -1610,7 +1612,9 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const money=(n,cents)=>n.toLocaleString("en-US",{style:"currency",currency:"USD",minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0});
 const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
 const total=P.scope.reduce((a,s)=>a+s.price,0);
-const payAmt=(()=>{const a=P.payments.map(p=>Math.round(total*p.pct/100));a[a.length-1]=total-a.slice(0,-1).reduce((x,y)=>x+y,0);return a})();
+const opt={paint:false};
+const grand=()=>total+P.options.reduce((a,o)=>a+(opt[o.id]?o.price:0),0);
+const payAmt=()=>{const a=P.payments.map(p=>Math.round(total*p.pct/100));a[a.length-1]=total-a.slice(0,-1).reduce((x,y)=>x+y,0);a[a.length-1]+=grand()-total;return a};
 const ICON={
   shield:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
   deck:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 9h18M5 9v11M19 9v11M12 9v11M3 4l9 3 9-3"/></svg>',
@@ -1625,6 +1629,14 @@ async function copyText(txt,msgEl,ok){
 }
 
 /* =============================== render page =============================== */
+function renderTotals(){
+  const g=grand(), pa=payAmt();
+  $("#totalBig").textContent=money(g);
+  $("#totalSub").textContent=(opt.paint?`Includes the ${money(6500)} paint option. `:"")+`Lump sum for both lots, for the scope described in this proposal. Valid for ${P.validDays} days from ${fmtDate(P.date)}.`;
+  $("#payList").innerHTML=P.payments.map((p,i)=>`<li><b>${p.pct}%</b><span>${esc(p.label)}${i===P.payments.length-1&&opt.paint?" + paint option":""}</span><span>${money(pa[i])}</span></li>`).join("");
+  $("#signTotal").textContent=money(g,true);
+  const st=document.querySelector("#heroStats .stat b"); if(st)st.textContent=money(g);
+}
 function renderPage(){
   const C=P.company;
   $("#heroEyebrow").textContent=`${C.name} · ${C.city}`;
@@ -1648,10 +1660,11 @@ function renderPage(){
 
   $("#priceRows").innerHTML=P.scope.map((s,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${esc(s.name)}</td><td>${money(s.price)}</td></tr>`).join("")
     +`<tr class="tot"><td></td><td>Total project investment</td><td>${money(total,true)}</td></tr>`;
-  $("#totalBig").textContent=money(total);
   $("#totalSub").textContent=`Lump sum for both lots, for the scope described in this proposal. Valid for ${P.validDays} days from ${fmtDate(P.date)}.`;
   $("#payBar").innerHTML=P.payments.map(p=>`<i style="flex:${p.pct}"></i>`).join("");
-  $("#payList").innerHTML=P.payments.map((p,i)=>`<li><b>${p.pct}%</b><span>${esc(p.label)}</span><span>${money(payAmt[i])}</span></li>`).join("");
+  $("#optBox").innerHTML=`<div class="k">Option · not included in the total</div>`+P.options.map(o=>`<label><input type="checkbox" data-opt="${o.id}"><span style="flex:1"><span class="ot"><span>${esc(o.name)}</span><span>+${money(o.price)}</span></span><p>${esc(o.desc)}</p></span></label>`).join("");
+  $("#optBox").onchange=e=>{const id=e.target.dataset.opt;if(!id)return;opt[id]=e.target.checked;renderTotals()};
+  renderTotals();
   if(P.offer){const o=$("#offer");o.hidden=false;o.innerHTML=`${ICON.tag}<div><b>${esc(P.offer.title)}</b><span>${esc(P.offer.body)}</span></div>`}
 
   $("#tlLede").textContent=P.timelineLede;
@@ -1667,13 +1680,13 @@ function renderPage(){
 
   $("#accLede").textContent=`Acceptance of this proposal authorizes ${C.name} to prepare the construction contract and begin permit submittals. Questions first? Call or text ${C.rep} and we will walk you through it.`;
   $("#accPhone").textContent=C.phone;
-  $("#signTitle").textContent=P.title; $("#signTotal").textContent=money(total,true);
+  $("#signTitle").textContent=P.title;
   $("#signClient").textContent="Accepted by · "+P.client.name; $("#signCo").textContent=C.name;
   $("#ftName").textContent=C.name; $("#ftInfo").textContent=`${C.city} · ${C.phone} · ${C.web}`;
   $("#modelNote").textContent=P.modelNote;
   $("#selNote").textContent=`Paste them in a text to ${C.rep} at ${C.phone}. Colors are shown for preview; final colors are confirmed on samples.`;
   $("#copyPhone").onclick=()=>copyText(C.phone,$("#phoneMsg"),"Number copied");
-  const approveMsg=()=>`Hi ${C.rep}, this is ${P.client.name}. I approve the ${P.title} for ${P.client.property} (${money(total,true)}). My colors: Block wall ${FIN.block[sel.block][0]}, Concrete ${FIN.conc[sel.conc][0]}. Please send the agreement and let me know next steps.`;
+  const approveMsg=()=>`Hi ${C.rep}, this is ${P.client.name}. I approve the ${P.title} for ${P.client.property} (${money(grand(),true)}${opt.paint?", including the paint-all-new-steel option":", without the paint option"}). My colors: Block wall ${FIN.block[sel.block][0]}, Concrete ${FIN.conc[sel.conc][0]}. Please send the agreement and let me know next steps.`;
   const smsTo="+1"+C.phone.replace(/\D/g,"").slice(-10);
   const ta=$("#textApprove"); $("#textApproveLbl").textContent=`Text ${C.rep} to approve`;
   const setHref=()=>{ta.href=`sms:${smsTo}?&body=${encodeURIComponent(approveMsg())}`};
